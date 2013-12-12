@@ -5,23 +5,22 @@ JSON-RPC-2.0 implementation for [AngularJS](http://angularjs.org/).
 
 For Usage see `test.js`.
 
-TODO
-==========
+An example JSFiddle is working here: http://jsfiddle.net/89D4b/1/
 
-  * Add `batch` request.
-  * Add callbacks.
-  * Add more options
-  * Validating parameters.
 
-Contribute
-==========
+Instead of creating a new factory for handling jsonrpc request, this angular module (angular-json-rpc) creates a new shortcut just like $http.get, but is instead $http.jsonrpc;
 
-  * Fork https://github.com/0xAX/angularjs-json-rpc
-  * Make changes
-  * Send pull request
-  * Thank you.
+
+This code is under [WTFPL](http://www.wtfpl.net/).
+
 
 Author
 ========
+* Idea by: [0xAX](https://twitter.com/0xAX)
+* Changed to decorator by [cfairweather](https://www.github.com/cfairweather)
 
-[0xAX](https://twitter.com/0xAX)
+Example usage:
+====
+        //url, method, parameters, config
+        $http.jsonrpc('url/to/jsonrpc/service', 'methodToCall', [1, 2, 3], {}).success(function(){}).error(function(){});
+For more information on callacks, see [$http](http://docs.angularjs.org/api/ng.$http).
