@@ -6,6 +6,12 @@
     <script src="angular-json-rpc.js" type="text/javascript"></script>
     <script src="test.js" type="text/javascript"></script>
   </head>
-  <body ng-controller="TestController">
+  <body ng-app="test-module-jsonrpc">
+    <div ng-controller="TestController">
+      Hello, {{name}}. Here are some people on your team:
+      <ul>
+        <li ng-repeat="t in team">{{t}}</li>
+      </ul>
+    </div>
   </body>
 </html>
