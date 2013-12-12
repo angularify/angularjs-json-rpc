@@ -1,8 +1,8 @@
 //This example uses dependency injection, which is minification safe!
 
-//All you need to do to declare the dependency on the angularjs-json-rpc module is add it to the array when you create a module.
+//All you need to do to declare the dependency on the angular-json-rpc module is add it to the array when you create a module.
 
-angular.module('test-module-jsonrpc', ['angularjs-json-rpc'])
+angular.module('test-module-jsonrpc', ['angular-json-rpc'])
 .controller('TestController', ['$scope', '$http' , function (scope, $http) {
 	scope.name = "cfairweather";
 	scope.team = [];
