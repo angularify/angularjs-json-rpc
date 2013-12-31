@@ -1,67 +1,50 @@
-angular.module('angular-json-rpc', []);
-//
 // json rpc for angular js. JSON-RPC-2.0 compatible.
 // spec - http://www.jsonrpc.org/specification
-//
-var jsonRpc = angular.module('angular-json-rpc', []).factory("jsonRpc", ['$http', function($http) {
-	this.version = "2.0";
 
-	this.url = null;
+//Created by 0xAX (https://github.com/0xAX/angularjs-json-rpc)
+//Modified by cfairweather (https://www.github.com/cfairweather/angularjs-json-rpc)
 
-	//
-	// setup rpc
-	//
-	this.setup = function(params){
-		// check params
-		check_params(params);
-		this.url = params.url;
-		return this;
-	}
+//By omission of 0xAX, I've added the following permissive license:
+//--------------------------------------------------------------------
+/*           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                   Version 2, December 2004
+
+Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+ 0. You just DO WHAT THE FUCK YOU WANT TO.*/
 
 
-	success = function(data, status, headers, config){
+//Par ommision de 0xAX, j'ai ajouté la license permissive, qui suit:
+//--------------------------------------------------------------------
+/*             LICENCE PUBLIQUE RIEN À BRANLER
+                     Version 1, Mars 2009
 
-	}
+Copyright (C) 2009 Sam Hocevar
 
-	error = function(data, status, headers, config){
+La copie et la distribution de copies exactes de cette licence sont
+autorisées, et toute modification est permise à condition de changer
+le nom de la licence.
 
-	}
+        CONDITIONS DE COPIE, DISTRIBUTON ET MODIFICATION
+              DE LA LICENCE PUBLIQUE RIEN À BRANLER
 
-	//
-	// json-rpc request
-	//
-	this.request = function(method, options){
-		if(options === undefined) 
-        	options = { id: 1 };
+ 0. Faites ce que vous voulez, j’en ai RIEN À BRANLER.
+*/
 
-        if (options.id === undefined)
-        	options.id = 1;
-
-        // make request
-        var bodyRequest = JSON.stringify({"jsonrpc": this.version, "method": method, "params": options.params, "id" : options.id});
-        var headers = {'Content-Type': 'application/json'};
-        $http({'url': this.url, 'method': 'POST', 'data' : bodyRequest, 'headers': headers})
-        	.success(function (data, status, headers, config){
-        		return data;
-        	}).error(function (data, status, headers, config) {
-        		return data;
-        	});
-        // return
-        return true;
-	}
-
-	//
-	// Check params
-	//
-	check_params = function(params){
-		if (params == undefined){
-			throw("Wrong params");
-		}
-
-		if (typeof(params.url) !== 'string' || params.url == '')
-			throw("Wrong url parameter");
-	}
-
-	return this;
-
+angular.module('angular-json-rpc', []).config([ "$provide", function($provide) {
+    
+    return $provide.decorator('$http', ['$delegate', function($delegate){
+            $delegate.jsonrpc = function(url, method, parameters, config){
+                var data = {"jsonrpc": "2.0", "method": method, "params": parameters, "id" : 1};
+                return $delegate.post(url, data, angular.extend({'headers':{'Content-Type': 'application/json'}}, config) );
+            };
+            return $delegate;
+        }]);
 }]);
